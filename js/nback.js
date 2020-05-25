@@ -20,6 +20,24 @@ function nback(){
     this.score = 0; //Total score for each session
     this.count_game = 0; //Total game played
 
+    this.lock_timestamp = true;
+    this.pre_timestamp = new Date();
+    this.arr_timestamp = [];
+
+
+    this.get_timedelta = function (){
+      if (!this.lock_timestamp) {
+        delta = new Date() - this.pre_timestamp
+        this.arr_timestamp.push(delta);
+        this.lock_timestamp = true;
+        return delta;
+      }
+    }
+    this.set_timestamp = function (){
+      this.pre_timestamp = new Date();
+      this.lock_timestamp = false;
+    }
+
     /**
     * Load all audio(.wav) files into Audio objects
     */
@@ -30,7 +48,7 @@ function nback(){
             letter = this.arr_chosen_letters[i];
             letter_path = 'letters/' + letter + '.wav';
             this.arr_audio[letter] = new Audio(letter_path);
-        }        
+        }
     };
     this.buffer_audio();
 
@@ -41,11 +59,11 @@ function nback(){
 
         var i;
         var random_letter, random_pos;
-        this.current_trial = -1; 
+        this.current_trial = -1;
         this.score = 0;
         for (i=0; i< this.count_trial; i++){
             //Get random letter from the chosen letters
-            random_letter = this.arr_chosen_letters[random_int(0, this.arr_chosen_letters.length-1)];            
+            random_letter = this.arr_chosen_letters[random_int(0, this.arr_chosen_letters.length-1)];
             //Generate random int number [1,9]
             random_pos = random_int(1,9);
             this.arr_pos[i] = random_pos;
@@ -65,7 +83,7 @@ function nback(){
     * Start a new game
     */
     this.start_game = function (){
-        this.init_game();               
+        this.init_game();
         this.show_next_trial();
         $("#pressSpace").html('');
     };
@@ -80,7 +98,7 @@ function nback(){
             this.reset_color();
             this.current_trial++;
             var current_trial = this.current_trial;
-            var current_pos = this.arr_pos[current_trial];                                    
+            var current_pos = this.arr_pos[current_trial];
             var current_letter = this.arr_letter[current_trial];
             //Play sound and show square
             this.play_sound(current_letter);
@@ -88,16 +106,19 @@ function nback(){
             //Hide square after one second
             var nb = this;
             setTimeout(function(){
-                nb.hide_square(current_pos);    
-            },this.square_duration);         
+                nb.hide_square(current_pos);
+            },this.square_duration);
 
             //Show next trial
             setTimeout(function(){
                 nb.show_next_trial();
-            },this.speed);       
+            },this.speed);
 
             //Allow answering after a quick delay
-            setTimeout('nb.answer_allowed = true',this.answer_delay);
+            setTimeout(function(){
+                nb.answer_allowed = true;
+                nb.set_timestamp();
+            },this.answer_delay);
         }
         else {
             //End one session
@@ -107,19 +128,21 @@ function nback(){
             this.current_trial = -1;
             this.count_game++;
             this.add_scoreboard();
+            console.log(this.arr_timestamp);
+            alert(this.arr_timestamp);
             $("#pressSpace").html('Press SPACE to start a new session');
         }
 
     };
-    
+
     /**
     * Add current score to the scoreboard
     */
     this.add_scoreboard = function(){
         var total_score = (this.count_trial - this.count_nback)*2;
-        var score_percent = Math.floor((this.score / total_score) * 100);           
+        var score_percent = Math.floor((this.score / total_score) * 100);
         var new_li = $("<li>").html("Session "+ this.count_game +" => " + score_percent + "%");
-        $("#scoreList").append(new_li);        
+        $("#scoreList").append(new_li);
         console.debug($("#scoreList").length);
     };
 
@@ -168,7 +191,7 @@ function nback(){
         var canvas = $("#gameCanvas");
         var margin = 10;
         var square_width = Math.floor(canvas.width()/3 - margin*2);
-        var ctx = canvas[0].getContext("2d");   
+        var ctx = canvas[0].getContext("2d");
         var ypos = Math.floor((pos - 1)/3) * (square_width + 2*margin);
         var xpos = ((pos-1) % 3) * (square_width + 2*margin);
         ctx.clearRect(xpos + margin, ypos + margin,square_width,square_width);
@@ -177,8 +200,8 @@ function nback(){
     /**
     * Play sound based on input letter(ch)
     */
-    this.play_sound = function (letter){        
-        this.arr_audio[letter].play();        
+    this.play_sound = function (letter){
+        this.arr_audio[letter].play();
     };
 
     /**
@@ -187,8 +210,8 @@ function nback(){
     this.draw_background = function (){
         var canvas = $("#gameCanvas");
         var line_width = 1;
-        var space_width = Math.floor((canvas.width() - 2 * line_width)/3);        
-        var ctx = $(canvas)[0].getContext('2d');        
+        var space_width = Math.floor((canvas.width() - 2 * line_width)/3);
+        var ctx = $(canvas)[0].getContext('2d');
         //ctx.fillStyle = "rgb(0,0,0)";
         //ctx.fillRect(space_width, 0, line_width, canvas.height());
         ctx.lineWidth = line_width;
@@ -203,10 +226,10 @@ function nback(){
         ctx.lineTo(canvas.width(), space_width);
         ctx.moveTo(0, space_width*2);
         ctx.lineTo(canvas.width(), space_width*2);
-        ctx.stroke();        
-        ctx.closePath();        
+        ctx.stroke();
+        ctx.closePath();
     };
-    this.draw_background();   
+    this.draw_background();
 
     /**
     * Return true if current position is the same as n-back trial position
@@ -218,10 +241,10 @@ function nback(){
             var prev_value = this.arr_pos[compare_trial];
             if (current_value == prev_value){
                 return true;
-            }            
-        };    
+            }
+        };
         return false;
-    }; 
+    };
 
     /**
     * Return true if current letter is the same as n-back trial letter
@@ -233,20 +256,20 @@ function nback(){
             var prev_value = this.arr_letter[compare_trial];
             if (current_value == prev_value){
                 return true;
-            }            
-        };    
+            }
+        };
         return false;
-    }; 
+    };
 
     /**
     * Reset indicator color
     */
     this.reset_color = function(){
-        $("#pressA").css('color','black'); 
-        $("#pressL").css('color','black'); 
+        $("#pressA").css('color','black');
+        $("#pressL").css('color','black');
         this.pressed_a = false;
         this.pressed_l = false;
-    }     
+    }
 }
 
 /**
@@ -258,46 +281,49 @@ function random_int(m, n){
 
 var nb;
 
-$(function(){            
+$(function(){
     nb = new nback();
     //nb.start_game();
     //nb.draw_background();
     //nb.draw_square(8);
     //nb.play_sound('t');
     //setTimeout('nb.hide_square(8)',1000);
-    
-    $(document).keydown(function(e){        
+
+    $(document).keydown(function(e){
         if (e.which == 32){
             //Spacebar
             if (nb.current_trial < 0){
                 nb.start_game();
-            }            
-        }        
-        if (nb.answer_allowed && e.which == 65){
-            if (!nb.pressed_a){
-                //A key            
-                if (nb.is_pos_thesame()){
-                    if (nb.show_indicator) $("#pressA").css('color','green');
-                }
-                else
-                    {
-                    if (nb.show_indicator) $("#pressA").css('color','red');
-                }
-                nb.pressed_a = true;
             }
         }
-        if (nb.answer_allowed && e.which == 76){
-            if (!nb.pressed_l){
-                //L key
-                if (nb.is_letter_thesame()){
-                    if (nb.show_indicator) $("#pressL").css('color','green');
-                }
-                else
-                    {
-                    if (nb.show_indicator) $("#pressL").css('color','red');
-                }
-                nb.pressed_l = true;
-            }
+        if (nb.answer_allowed && (e.which == 65 || e.which == 76)) {
+          console.log(nb.get_timedelta());
+          if (nb.answer_allowed && e.which == 65){
+              if (!nb.pressed_a){
+                  //A key
+                  if (nb.is_pos_thesame()){
+                      if (nb.show_indicator) $("#pressA").css('color','green');
+                  }
+                  else
+                      {
+                      if (nb.show_indicator) $("#pressA").css('color','red');
+                  }
+                  nb.pressed_a = true;
+              }
+          }
+          if (nb.answer_allowed && e.which == 76){
+              if (!nb.pressed_l){
+                  //L key
+                  if (nb.is_letter_thesame()){
+                      if (nb.show_indicator) $("#pressL").css('color','green');
+                  }
+                  else
+                      {
+                      if (nb.show_indicator) $("#pressL").css('color','red');
+                  }
+                  nb.pressed_l = true;
+              }
+          }
         }
     });
 });
