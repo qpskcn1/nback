@@ -1,5 +1,4 @@
 name: Add Env
-
 on:
   push:
     branches:
@@ -15,10 +14,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
 
+    - name: Build
+      env:
+        FIREBASE_APIKEY: ${{ secrets.FIREBASE_APIKEY }}
+
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
-      env: 
-        FIREBASE: ${{ secrets.FIREBASE_APIKEY }}
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
