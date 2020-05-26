@@ -1,17 +1,5 @@
 
-function handleButtonClick() {
-    var dbRef = firebase.database().ref('users/yida/'+ new Date());
-    data = {"time":[1,23,3,4,4],"accuracy":4.7};
-    dbRef.update(data);
-    console.log("Sent data to database: " + data);
-}
-function writeUserData(userId, name, email, imageUrl) {
-  firebase.database().ref('users/' + userId).set({
-    username: name,
-    email: email,
-    profile_picture : imageUrl
-  });
-}
+
 
 function nback(){
     this.count_nback = 2; //Number n in n-back
@@ -38,9 +26,26 @@ function nback(){
     this.lock_timestamp = true;
     this.pre_timestamp = new Date();
     this.arr_timestamp = [];
+    this.score_per = 0;
 
+    this.id_MTIDorUser = "null";
 
-    this.get_timedelta = function (){
+    this.getID = function(){
+
+    }
+    this.refreshLog(){
+      this.lock_timestamp = true;
+      this.arr_timestamp = [];
+      this.score_per = 0;
+    }
+    this.sendResult = function() {
+        var dbRef = firebase.database().ref('users/'+this.id_MTIDorUser+'/'+ new Date());
+        data = {"time":this.arr_timestamp,"accuracy":this.score_per};
+        dbRef.update(data);
+        console.log("Sent data to database: " + data);
+    }
+
+    this.get_timedelta = function(){
       if (!this.lock_timestamp) {
         delta = new Date() - this.pre_timestamp
         this.arr_timestamp.push(delta);
@@ -48,6 +53,7 @@ function nback(){
         return delta;
       }
     }
+
     this.set_timestamp = function (){
       this.pre_timestamp = new Date();
       this.lock_timestamp = false;
@@ -71,7 +77,7 @@ function nback(){
     * Initialzie the arrays for next game
     */
     this.init_game = function (){
-
+        this.refreshLog();
         var i;
         var random_letter, random_pos;
         this.current_trial = -1;
@@ -98,7 +104,6 @@ function nback(){
     * Start a new game
     */
     this.start_game = function (){
-        handleButtonClick();
         this.init_game();
         this.show_next_trial();
         $("#pressSpace").html('');
@@ -144,6 +149,7 @@ function nback(){
             this.current_trial = -1;
             this.count_game++;
             this.add_scoreboard();
+            this.sendResult();
             console.log(this.arr_timestamp);
             alert(this.arr_timestamp);
             $("#pressSpace").html('Press SPACE to start a new session');
@@ -157,6 +163,7 @@ function nback(){
     this.add_scoreboard = function(){
         var total_score = (this.count_trial - this.count_nback)*2;
         var score_percent = Math.floor((this.score / total_score) * 100);
+        this.score_per = score_percent;
         var new_li = $("<li>").html("Session "+ this.count_game +" => " + score_percent + "%");
         $("#scoreList").append(new_li);
         console.debug($("#scoreList").length);
