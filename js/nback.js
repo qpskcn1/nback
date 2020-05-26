@@ -1,3 +1,18 @@
+
+function handleButtonClick() {
+    var dbRef = firebase.database().ref('users/yida/'+ new Date());
+    data = {"time":[1,23,3,4,4],"accuracy":4.7};
+    dbRef.update(data);
+    console.log("Sent data to database: " + data);
+}
+function writeUserData(userId, name, email, imageUrl) {
+  firebase.database().ref('users/' + userId).set({
+    username: name,
+    email: email,
+    profile_picture : imageUrl
+  });
+}
+
 function nback(){
     this.count_nback = 2; //Number n in n-back
     this.count_trial = 22;
@@ -83,6 +98,7 @@ function nback(){
     * Start a new game
     */
     this.start_game = function (){
+        handleButtonClick();
         this.init_game();
         this.show_next_trial();
         $("#pressSpace").html('');
