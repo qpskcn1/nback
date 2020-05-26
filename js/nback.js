@@ -302,6 +302,17 @@ function random_int(m, n){
     return Math.floor(m + (1+n-m)*Math.random());  // num is random integer from m to n
 }
 
+function getQueryVariable(variable)
+{
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+    }
+    return(false);
+}
+
 var nb;
 
 $(function(){
@@ -313,7 +324,7 @@ $(function(){
     //setTimeout('nb.hide_square(8)',1000);
 
     $(document).keydown(function(e){
-        if (e.which == 32){
+        if (e.which == 32){ 
             //Spacebar
             if (nb.current_trial < 0){
                 nb.start_game();
