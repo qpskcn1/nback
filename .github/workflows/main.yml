@@ -1,26 +1,22 @@
-name: Add Env
+name: deploy_to_firebase_hosting
+
 on:
   push:
-    branches:
-      - master
+    tags:
+      - release-production-*
 
 jobs:
-  build:
+  deploy_to_firebase_hosting:
 
     runs-on: ubuntu-latest
-
+    
     steps:
-
-    - name: Checkout
-      uses: actions/checkout@v1
-
-    - name: Build
-      env:
-        FIREBASE_APIKEY: ${{ secrets.FIREBASE_APIKEY }}
-
-    - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: build
+      - name: Checkout the repository
+        uses: actions/checkout@master
+      
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
