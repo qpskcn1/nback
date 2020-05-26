@@ -40,8 +40,11 @@ function nback(){
       this.score_per = 0;
     }
     this.sendResult = function() {
+
+        var user = firebase.auth().currentUser;
         var dbRef = firebase.database().ref('users/'+this.id_MTIDorUser+'/'+ new Date());
-        data = {"time":this.arr_timestamp,"accuracy":this.score_per};
+
+        data = {"uid":user.uid,"time":this.arr_timestamp,"accuracy":this.score_per};
         dbRef.update(data);
         console.log("Sent data to database: " + data);
     }
