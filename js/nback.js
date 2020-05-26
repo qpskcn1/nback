@@ -29,11 +29,12 @@ function nback(){
     this.score_per = 0;
 
     this.id_MTIDorUser = "null";
+    this.id_MTIDorUser = getQueryVariable("userID");
 
     this.getID = function(){
 
     }
-    this.refreshLog(){
+    this.refreshLog = function(){
       this.lock_timestamp = true;
       this.arr_timestamp = [];
       this.score_per = 0;
@@ -324,7 +325,7 @@ $(function(){
     //setTimeout('nb.hide_square(8)',1000);
 
     $(document).keydown(function(e){
-        if (e.which == 32){ 
+        if (e.which == 32){
             //Spacebar
             if (nb.current_trial < 0){
                 nb.start_game();
