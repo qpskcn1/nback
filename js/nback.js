@@ -25,26 +25,27 @@ function nback(){
 
     this.lock_timestamp = true;
     this.pre_timestamp = new Date();
-    this.arr_timestamp = [];
+    this.time = [];
     this.score_per = 0;
-
-    this.id_MTIDorUser = "null";
+    this.timedelta = 0;
+    this.id_MTIDorUser = "";
     this.id_MTIDorUser = getQueryVariable("userID");
-
-    this.getID = function(){
-
+    console.log(this.id_MTIDorUser);
+    if (!this.id_MTIDorUser) {
+      alert("Need Worker ID");
     }
+
     this.refreshLog = function(){
       this.lock_timestamp = true;
-      this.arr_timestamp = [];
+      this.time = [];
       this.score_per = 0;
+      this.data_point = {};
     }
     this.sendResult = function() {
-
         var user = firebase.auth().currentUser;
         var dbRef = firebase.database().ref('users/'+this.id_MTIDorUser+'/'+ new Date());
 
-        data = {"uid":user.uid,"time":this.arr_timestamp,"accuracy":this.score_per};
+        data = {"uid":user.uid,"time":this.time,"accuracy":this.score_per};
         dbRef.update(data);
         console.log("Sent data to database: " + data);
     }
@@ -52,7 +53,9 @@ function nback(){
     this.get_timedelta = function(){
       if (!this.lock_timestamp) {
         delta = new Date() - this.pre_timestamp
-        this.arr_timestamp.push(delta);
+        this.timedelta = delta;
+        console.log("get_timedelta");
+        console.log(delta);
         this.lock_timestamp = true;
         return delta;
       }
@@ -154,8 +157,8 @@ function nback(){
             this.count_game++;
             this.add_scoreboard();
             this.sendResult();
-            console.log(this.arr_timestamp);
-            alert(this.arr_timestamp);
+            console.log(this.time);
+            // alert(this.time);
             $("#pressSpace").html('Press SPACE to start a new session');
         }
 
@@ -181,6 +184,18 @@ function nback(){
             if (this.pressed_a && this.is_pos_thesame()){
                 //Pressed A correctly
                 this.score++;
+                this.time.push({
+                    "time": this.timedelta,
+                    "cat": "pos",
+                    "correct": true
+                });
+            } else if (this.pressed_a && !this.is_pos_thesame()) {
+                //Pressed A wrong
+                this.time.push({
+                    "time": this.timedelta,
+                    "cat": "pos",
+                    "correct": false
+                });
             } else if (!this.pressed_a && !this.is_pos_thesame()){
                 //Skipped A correctly
                 this.score++;
@@ -188,6 +203,18 @@ function nback(){
             if (this.pressed_l && this.is_letter_thesame()){
                 //Pressed L correctly
                 this.score++;
+                this.time.push({
+                    "time": this.timedelta,
+                    "cat": "aud",
+                    "correct": true
+                });
+            } else if (this.pressed_l && this.is_letter_thesame()){
+                //Pressed L wrong
+                this.time.push({
+                    "time": this.timedelta,
+                    "cat": "aud",
+                    "correct": false
+                });
             } else if (!this.pressed_l && !this.is_letter_thesame()){
                 //Skipped L correctly
                 this.score++;
