@@ -56,7 +56,10 @@
           };
           firebase.initializeApp(firebaseConfig);
           firebase.auth().signInAnonymously().catch(handleLoginError);
-          firebase.auth().onAuthStateChanged(handleAuthSuccess);
+          function handleLoginError(error) {
+            console.log("error.code:" + error.code)
+            console.log("error.message:" + error.message)
+          }
         </script>
     </body>
 </html>
