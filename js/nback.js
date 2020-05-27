@@ -228,8 +228,8 @@ function nback(){
     */
     this.draw_square = function (pos){
         var canvas = $("#gameCanvas");
-        var margin = 18;
-        var square_width = Math.floor(canvas.width()/3 - margin*2);
+        var margin = 1;
+        var square_width = Math.floor((canvas.width()-4)/3 - margin*2)+2;
         var ctx = canvas[0].getContext("2d");
         var img = $("#imgSquare");
         //Calculate position based on pos number 1 - 9
@@ -243,8 +243,8 @@ function nback(){
     */
     this.hide_square = function (pos){
         var canvas = $("#gameCanvas");
-        var margin = 10;
-        var square_width = Math.floor(canvas.width()/3 - margin*2);
+        var margin = 1;
+        var square_width = Math.floor((canvas.width()-4)/3 - margin*2)+2;
         var ctx = canvas[0].getContext("2d");
         var ypos = Math.floor((pos - 1)/3) * (square_width + 2*margin);
         var xpos = ((pos-1) % 3) * (square_width + 2*margin);
@@ -264,7 +264,7 @@ function nback(){
     this.draw_background = function (){
         var canvas = $("#gameCanvas");
         var line_width = 2;
-        var space_width = Math.floor((canvas.width() - 2 * line_width)/3);
+        var space_width = Math.floor((canvas.width() - 2 * line_width)/3)+line_width;
         var ctx = $(canvas)[0].getContext('2d');
         //ctx.fillStyle = "rgb(0,0,0)";
         //ctx.fillRect(space_width, 0, line_width, canvas.height());
@@ -321,8 +321,8 @@ function nback(){
     * Reset indicator color
     */
     this.reset_color = function(){
-        $("#pressA").css('background-color','rgb(153,153,153)');
-        $("#pressL").css('background-color','rgb(153,153,153)');
+        $("#pressA").css('background-color','rgb(226,226,226)');
+        $("#pressL").css('background-color','rgb(226,226,226)');
         this.pressed_a = false;
         this.pressed_l = false;
     }
@@ -363,30 +363,30 @@ $(function(){
                 nb.start_game();
             }
         }
-        if (nb.answer_allowed && (e.which == 65 || e.which == 76)) {
+        if (nb.answer_allowed && (e.which == 37 || e.which == 39)) {
           console.log(nb.get_timedelta());
-          if (nb.answer_allowed && e.which == 65){
+          if (nb.answer_allowed && e.which == 37){
               if (!nb.pressed_a){
                   //A key
                   if (nb.is_pos_thesame()){
-                      if (nb.show_indicator) $("#pressA").css('background-color','rgb(100,200,100)');
+                      if (nb.show_indicator) $("#pressA").css('background-color','rgb(133,210,166)');
                   }
                   else
                       {
-                      if (nb.show_indicator) $("#pressA").css('background-color','red');
+                      if (nb.show_indicator) $("#pressA").css('background-color','rgb(233,159,159)');
                   }
                   nb.pressed_a = true;
               }
           }
-          if (nb.answer_allowed && e.which == 76){
+          if (nb.answer_allowed && e.which == 39){
               if (!nb.pressed_l){
                   //L key
                   if (nb.is_letter_thesame()){
-                      if (nb.show_indicator) $("#pressL").css('background-color','green');
+                      if (nb.show_indicator) $("#pressL").css('background-color','rgb(133,210,166)');
                   }
                   else
                       {
-                      if (nb.show_indicator) $("#pressL").css('background-color','red');
+                      if (nb.show_indicator) $("#pressL").css('background-color','rgb(233,159,159)');
                   }
                   nb.pressed_l = true;
               }
