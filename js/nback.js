@@ -236,13 +236,15 @@ function nback(){
     */
     this.draw_background = function (){
         var canvas = $("#gameCanvas");
-        var line_width = 1;
+        var line_width = 2;
         var space_width = Math.floor((canvas.width() - 2 * line_width)/3);
         var ctx = $(canvas)[0].getContext('2d');
         //ctx.fillStyle = "rgb(0,0,0)";
         //ctx.fillRect(space_width, 0, line_width, canvas.height());
+        ctx.strokeStyle = "rgb(25,25,25)";
         ctx.lineWidth = line_width;
         ctx.beginPath();
+
         //Vertical lines
         ctx.moveTo(space_width, 0);
         ctx.lineTo(space_width, canvas.height());
@@ -292,8 +294,8 @@ function nback(){
     * Reset indicator color
     */
     this.reset_color = function(){
-        $("#pressA").css('color','black');
-        $("#pressL").css('color','black');
+        $("#pressA").css('background-color','rgb(153,153,153)');
+        $("#pressL").css('background-color','rgb(153,153,153)');
         this.pressed_a = false;
         this.pressed_l = false;
     }
@@ -340,11 +342,11 @@ $(function(){
               if (!nb.pressed_a){
                   //A key
                   if (nb.is_pos_thesame()){
-                      if (nb.show_indicator) $("#pressA").css('color','green');
+                      if (nb.show_indicator) $("#pressA").css('background-color','rgb(100,200,100)');
                   }
                   else
                       {
-                      if (nb.show_indicator) $("#pressA").css('color','red');
+                      if (nb.show_indicator) $("#pressA").css('background-color','red');
                   }
                   nb.pressed_a = true;
               }
@@ -353,11 +355,11 @@ $(function(){
               if (!nb.pressed_l){
                   //L key
                   if (nb.is_letter_thesame()){
-                      if (nb.show_indicator) $("#pressL").css('color','green');
+                      if (nb.show_indicator) $("#pressL").css('background-color','green');
                   }
                   else
                       {
-                      if (nb.show_indicator) $("#pressL").css('color','red');
+                      if (nb.show_indicator) $("#pressL").css('background-color','red');
                   }
                   nb.pressed_l = true;
               }

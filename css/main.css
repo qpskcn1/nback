@@ -2,39 +2,86 @@
     margin: 0;
     border: 0;
 }
+h3{
+  color: #FFFFFF;
+  font-family: Arial;
+}
 
 #wrapper{
-    margin: 0 auto; /* margin auto to align center */
+    margin-top: 36px; /* margin auto to align center */
+    margin-left: 150px;
+    margin-right: 150px;
     width: 900px;
+    display: flex;
+    flex-direction: row;
+
+
 }
 
 #gameCanvas{
-    background-color: rgba(200,100,100,0.4);
-    width: 400px;
-    height: 400px;
+    background-color: rgb(81,81,81);
+    width: 300px;
+    height: 300px;
+    border-radius:3px;
 }
 
 .instruction{
-    font-size: 20px;
+    font-size: 12px;
     font-weight: bold;
-    margin-top: 10px;    
-}  
+    margin-top: 10px;
+    font-family: Arial;
+}
 
 .space{
-    color: blue;
-    margin-left: 50px;
-    height: 20px;    
-} 
+  width: 300px;
+    color: #e2e2e2;
+    height: 20px;
+    font-weight: lighter;
+    text-align: center;
+}
 
+#pressArea{
+  display: flex;
+  width: 300px;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#pressA, #pressL {
+  color: #000000;
+  font-family: sans-serif;
+  font-weight: lighter;
+  border-radius:3px;
+  background: #e2e2e2;
+  width: 135px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+}
+.iconBoard{
+  height: 60px;
+  display: flex;
+  justify-content: center;
+}
+.pressIns{
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 0px;
+  height: 20px;
+  text-align: center;
+}
 #content{
-    padding-top: 10px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 60px;
+    padding-top: 30px;
+    background-color: rgb(34, 34, 34);
 }
 
 #gameDiv{
-    float: left;    
+    width:390px;
+    height: 500px;
 }
 
 #scoreBoard{
-    float: left;
     padding-left: 20px;
 }
