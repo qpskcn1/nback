@@ -12,6 +12,7 @@ body{
   align-items: center;
   width: 100%;
   height: 100%;
+  background-color: #606060;
 }
 html, body {
   margin: 0;
@@ -21,7 +22,7 @@ html, body {
 }
 
 #wrapper{
-    
+
     /* margin-left: 150px;
     margin-right: 150px; */
     width: 800px;
@@ -30,6 +31,7 @@ html, body {
     box-shadow: 0px 10px 15px rgba(0,0,0,.2);
     border-radius: 3px;
     height: 514px;
+    background-color: #F9F9F9;
 
 }
 
@@ -54,6 +56,37 @@ html, body {
     height: 20px;
     font-weight: lighter;
     text-align: center;
+}
+
+@keyframes blink{
+  0%{opacity: 1;}
+  100%{opacity: 0;}
+}
+/* 添加兼容性前缀 */
+@-webkit-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-moz-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-ms-keyframes blink {
+    0% {opacity: 1; }
+    100% { opacity: 0;}
+}
+@-o-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+#pressSpace{
+    animation: blink 1s linear infinite;
+    /* 其它浏览器兼容性前缀 */
+    -webkit-animation: blink 1s linear infinite;
+    -moz-animation: blink 1s linear infinite;
+    -ms-animation: blink 1s linear infinite;
+    -o-animation: blink 1s linear infinite;
 }
 
 #pressArea{
@@ -82,7 +115,10 @@ html, body {
   background-color: rgb(255, 255, 255);
   margin-bottom: 0px;
   height: 20px;
+  display: flex;
   text-align: center;
+  justify-content: center;
+  line-height: 20px;
 }
 #content{
     height: 490px;
