@@ -1,6 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
     <head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-164671466-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-164671466-1');
+	</script>
         <meta http-equiv="Pragma" content="no-cache">
         <meta http-equiv="Cache-Control" content="no-cache">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -12,24 +21,91 @@
     </head>
     <body>
         <div id="wrapper">
-            <div id="header">
-                <h3>Dual 2-back Game</h3>
-                <a href="http://brainworkshop.sourceforge.net/tutorial.html" target="_blank">How to play</a>
-            </div>
+
             <div id="content">
+              <div id="header">
+                  <h3>Dual 2-back Game</h3>
+                  <a href="http://brainworkshop.sourceforge.net/tutorial.html" target="_blank" style="color:#9999FF;font-family: Arial;" >How to play</a>
+              </div>
                 <div id="gameDiv">
-                    <canvas id="gameCanvas" width="400" height="400">
+                    <canvas id="gameCanvas" width="304" height="304">
                     </canvas>
                     <img id="imgSquare" src="image/square_blue.png" style="display: none;"/>
                     <div class="instruction space" id="pressSpace">Press SPACE to start a new session</div>
-                    <div class="instruction pressA" id="pressA">Press A: Position match</div>
-                    <div class="instruction pressL" id="pressL">Press L: Audio match</div>
+                    <div id="pressArea">
+                      <div class="instruction pressA" id="pressA">
+                        <div class="iconBoard" id="boL">
+                          <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" width=45px xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 511.999 511.999" style="enable-background:new 0 0 511.999 511.999;" xml:space="preserve">
+<g>
+	<g>
+		<path d="M508.745,246.041c-4.574-6.257-113.557-153.206-252.748-153.206S7.818,239.784,3.249,246.035
+			c-4.332,5.936-4.332,13.987,0,19.923c4.569,6.257,113.557,153.206,252.748,153.206s248.174-146.95,252.748-153.201
+			C513.083,260.028,513.083,251.971,508.745,246.041z M255.997,385.406c-102.529,0-191.33-97.533-217.617-129.418
+			c26.253-31.913,114.868-129.395,217.617-129.395c102.524,0,191.319,97.516,217.617,129.418
+			C447.361,287.923,358.746,385.406,255.997,385.406z"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path d="M255.997,154.725c-55.842,0-101.275,45.433-101.275,101.275s45.433,101.275,101.275,101.275
+			s101.275-45.433,101.275-101.275S311.839,154.725,255.997,154.725z M255.997,323.516c-37.23,0-67.516-30.287-67.516-67.516
+			s30.287-67.516,67.516-67.516s67.516,30.287,67.516,67.516S293.227,323.516,255.997,323.516z"/>
+	</g>
+</g>
+
+</svg>
+                        </div>
+                        <div class="pressIns">Position match: Press A</div>
+                      </div>
+                      <div class="instruction pressL" id="pressL">
+                        <div class="iconBoard" id="boR">
+                          <svg version="1.1" id="Layer_1" width=40px xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<g>
+	<g>
+		<path d="M256,0C158.805,0,79.701,79.087,79.701,176.299c0,9.421,7.646,17.067,17.067,17.067s17.067-7.646,17.067-17.067
+			c0-78.387,63.778-142.165,142.165-142.165s142.165,63.778,142.165,142.165c0,51.251-19.951,70.741-47.667,97.792
+			c-30.174,29.474-67.721,66.133-67.721,145.237c0,32.29-26.266,58.539-58.556,58.539c-32.273,0-58.539-26.249-58.539-58.539
+			c0-9.438-7.646-17.067-17.067-17.067c-9.421,0-17.067,7.629-17.067,17.067c0,51.098,41.574,92.672,92.672,92.672
+			s92.689-41.574,92.689-92.672c0-64.717,29.201-93.235,57.532-120.917c28.45-27.768,57.856-56.457,57.856-122.112
+			C432.299,79.087,353.212,0,256,0z"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path d="M264.243,259.806c-5.069-19.849-17.562-36.506-35.14-46.916c-14.285-8.499-30.583-12.049-47.104-10.342
+			c-9.37,0.973-16.179,9.387-15.189,18.756c0.973,9.37,9.199,16.077,18.756,15.189c9.148-0.939,18.176,1.024,26.112,5.751
+			c9.762,5.769,16.674,15.002,19.49,26.01c2.833,11.025,1.178,22.477-4.625,32.239c-5.803,9.796-15.053,16.708-26.061,19.524
+			c-11.008,2.799-22.443,1.161-32.222-4.642c-8.107-4.796-18.586-2.133-23.381,5.973c-4.796,8.107-2.133,18.586,5.973,23.398
+			c11.998,7.117,25.395,10.769,38.997,10.769c6.366,0,12.766-0.802,19.063-2.424c19.849-5.069,36.523-17.562,46.967-35.157
+			C266.359,300.305,269.312,279.671,264.243,259.806z"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path d="M264.926,79.599c-54.903,0-99.567,44.681-99.567,99.584c0,9.421,7.646,17.067,17.067,17.067
+			c9.421,0,17.067-7.646,17.067-17.067c0-36.096,29.355-65.451,65.434-65.451c36.062,0,65.417,29.355,65.417,65.451
+			c0,9.421,7.629,17.067,17.067,17.067s17.067-7.646,17.067-17.067C364.476,124.279,319.812,79.599,264.926,79.599z"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path d="M199.185,172.356c-0.324-9.421-8.124-16.776-17.63-16.486c-9.421,0.324-16.811,8.209-16.486,17.63l1.519,45.397
+			c0.307,9.233,7.885,16.503,17.05,16.503c0.188,0,0.375,0,0.58-0.017c9.421-0.324,16.811-8.209,16.486-17.63L199.185,172.356z"/>
+	</g>
+</g>
+</svg>
+                        </div>
+                        <div class="pressIns">Sound match: Press L</div>
+                      </div>
+                    </div>
                 </div>
-                <div id="scoreBoard">
-                    <b>Score:</b>
-                    <ul id="scoreList">
-                    </ul>
-                </div>
+            </div>
+            <div id="scoreBoard">
+                <b>Score:</b>
+                <ul id="scoreList">
+                </ul>
             </div>
             <div id="footer">
             </div>

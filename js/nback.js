@@ -228,8 +228,8 @@ function nback(){
     */
     this.draw_square = function (pos){
         var canvas = $("#gameCanvas");
-        var margin = 18;
-        var square_width = Math.floor(canvas.width()/3 - margin*2);
+        var margin = 1;
+        var square_width = Math.floor((canvas.width()-4)/3 - margin*2)+2;
         var ctx = canvas[0].getContext("2d");
         var img = $("#imgSquare");
         //Calculate position based on pos number 1 - 9
@@ -243,8 +243,8 @@ function nback(){
     */
     this.hide_square = function (pos){
         var canvas = $("#gameCanvas");
-        var margin = 10;
-        var square_width = Math.floor(canvas.width()/3 - margin*2);
+        var margin = 1;
+        var square_width = Math.floor((canvas.width()-4)/3 - margin*2)+2;
         var ctx = canvas[0].getContext("2d");
         var ypos = Math.floor((pos - 1)/3) * (square_width + 2*margin);
         var xpos = ((pos-1) % 3) * (square_width + 2*margin);
@@ -263,13 +263,15 @@ function nback(){
     */
     this.draw_background = function (){
         var canvas = $("#gameCanvas");
-        var line_width = 1;
-        var space_width = Math.floor((canvas.width() - 2 * line_width)/3);
+        var line_width = 2;
+        var space_width = Math.floor((canvas.width() - 2 * line_width)/3)+line_width;
         var ctx = $(canvas)[0].getContext('2d');
         //ctx.fillStyle = "rgb(0,0,0)";
         //ctx.fillRect(space_width, 0, line_width, canvas.height());
+        ctx.strokeStyle = "rgb(25,25,25)";
         ctx.lineWidth = line_width;
         ctx.beginPath();
+
         //Vertical lines
         ctx.moveTo(space_width, 0);
         ctx.lineTo(space_width, canvas.height());
@@ -319,8 +321,8 @@ function nback(){
     * Reset indicator color
     */
     this.reset_color = function(){
-        $("#pressA").css('color','black');
-        $("#pressL").css('color','black');
+        $("#pressA").css('background-color','rgb(226,226,226)');
+        $("#pressL").css('background-color','rgb(226,226,226)');
         this.pressed_a = false;
         this.pressed_l = false;
     }
@@ -367,11 +369,11 @@ $(function(){
               if (!nb.pressed_a){
                   //A key
                   if (nb.is_pos_thesame()){
-                      if (nb.show_indicator) $("#pressA").css('color','green');
+                      if (nb.show_indicator) $("#pressA").css('background-color','rgb(133,210,166)');
                   }
                   else
                       {
-                      if (nb.show_indicator) $("#pressA").css('color','red');
+                      if (nb.show_indicator) $("#pressA").css('background-color','rgb(233,159,159)');
                   }
                   nb.pressed_a = true;
               }
@@ -380,11 +382,11 @@ $(function(){
               if (!nb.pressed_l){
                   //L key
                   if (nb.is_letter_thesame()){
-                      if (nb.show_indicator) $("#pressL").css('color','green');
+                      if (nb.show_indicator) $("#pressL").css('background-color','rgb(133,210,166)');
                   }
                   else
                       {
-                      if (nb.show_indicator) $("#pressL").css('color','red');
+                      if (nb.show_indicator) $("#pressL").css('background-color','rgb(233,159,159)');
                   }
                   nb.pressed_l = true;
               }

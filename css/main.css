@@ -2,39 +2,142 @@
     margin: 0;
     border: 0;
 }
+h3{
+  color: #FFFFFF;
+  font-family: Arial;
+}
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #606060;
+}
+html, body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden
+}
 
 #wrapper{
-    margin: 0 auto; /* margin auto to align center */
-    width: 900px;
+
+    /* margin-left: 150px;
+    margin-right: 150px; */
+    width: 800px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0px 10px 15px rgba(0,0,0,.2);
+    border-radius: 3px;
+    height: 514px;
+    background-color: #F9F9F9;
+
 }
 
 #gameCanvas{
-    background-color: rgba(200,100,100,0.4);
-    width: 400px;
-    height: 400px;
+    background-color: rgb(81,81,81);
+    width: 304px;
+    height: 304px;
+    border-radius:3px;
 }
 
 .instruction{
-    font-size: 20px;
+    font-size: 10px;
     font-weight: bold;
-    margin-top: 10px;    
-}  
+    margin-top: 10px;
+    font-family: Arial;
+}
 
 .space{
-    color: blue;
-    margin-left: 50px;
-    height: 20px;    
-} 
+    width: 304px;
+    font-size: 14px;
+    color: #e2e2e2;
+    height: 20px;
+    font-weight: lighter;
+    text-align: center;
+}
 
+@keyframes blink{
+  0%{opacity: 1;}
+  100%{opacity: 0;}
+}
+/* 添加兼容性前缀 */
+@-webkit-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-moz-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-ms-keyframes blink {
+    0% {opacity: 1; }
+    100% { opacity: 0;}
+}
+@-o-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+#pressSpace{
+    animation: blink 1s linear infinite;
+    /* 其它浏览器兼容性前缀 */
+    -webkit-animation: blink 1s linear infinite;
+    -moz-animation: blink 1s linear infinite;
+    -ms-animation: blink 1s linear infinite;
+    -o-animation: blink 1s linear infinite;
+}
+
+#pressArea{
+  display: flex;
+  width: 304px;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#pressA, #pressL {
+  color: #000000;
+  font-family: sans-serif;
+  font-weight: lighter;
+  border-radius:3px;
+  background: #e2e2e2;
+  width: 135px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+}
+.iconBoard{
+  height: 60px;
+  display: flex;
+  justify-content: center;
+}
+.pressIns{
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 0px;
+  height: 20px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  line-height: 20px;
+}
 #content{
-    padding-top: 10px;
+    height: 490px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 60px;
+    padding-top: 24px;
+    background-color: rgb(34, 34, 34);
+    border-radius: 3px;
+
 }
 
 #gameDiv{
-    float: left;    
+    width:365px;
+    height: 500px;
 }
 
 #scoreBoard{
-    float: left;
     padding-left: 20px;
+    padding-top: 24px;
+    font-family: Arial;
 }
