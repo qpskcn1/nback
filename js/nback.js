@@ -357,15 +357,16 @@ $(function(){
     //setTimeout('nb.hide_square(8)',1000);
 
     $(document).keydown(function(e){
+        console.log(e.which);
         if (e.which == 32){
             //Spacebar
             if (nb.current_trial < 0){
                 nb.start_game();
             }
         }
-        if (nb.answer_allowed && (e.which == 65 || e.which == 76)) {
+        if (nb.answer_allowed && (e.which == 37 || e.which == 39)) {
           console.log(nb.get_timedelta());
-          if (nb.answer_allowed && e.which == 65){
+          if (nb.answer_allowed && e.which == 37){
               if (!nb.pressed_a){
                   //A key
                   if (nb.is_pos_thesame()){
@@ -378,7 +379,7 @@ $(function(){
                   nb.pressed_a = true;
               }
           }
-          if (nb.answer_allowed && e.which == 76){
+          if (nb.answer_allowed && e.which == 39){
               if (!nb.pressed_l){
                   //L key
                   if (nb.is_letter_thesame()){
